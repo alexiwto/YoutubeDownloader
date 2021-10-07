@@ -1,6 +1,6 @@
 # YoutubeDownloader
 
-A light and fast youtube video downloader coded in Python, using pytube3 API and tkinter for the GUI.
+A light and fast youtube video downloader coded in Python, using pytube3 API and tkinter for the GUI. (TBD)
 
 ▶️pytube3: https://pypi.org/project/pytube3/
 
