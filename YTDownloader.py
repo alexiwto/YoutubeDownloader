@@ -9,11 +9,13 @@ from tkinter import ttk
 def get_streams():
     video_link = video_link_entry.get()
     if video_link != "":
-        yt = YouTube(video_link)
-        print("Title: " + yt.title)
-        return yt.streams
+        try:
+            yt = YouTube(video_link)
+            return yt.streams
+        except:
+            change_label_status("Video link not available", "red")
     else:
-        print("Video link needed")
+        change_label_status("Video link needed", "red")
 
 
 def print_streams(streams):
@@ -34,10 +36,17 @@ def download_stream():
         )
         download_folder = download_folder_entry.get()
         if download_folder != "":
-            video.download(download_folder)
-            print("Video downloaded!")
+            try:
+                video.download(download_folder)
+                change_label_status("Video downloaded!", "green")
+            except:
+                change_label_status("Video could not be downloaded", "red")
         else:
-            print("Download folder needed")
+            change_label_status("Download folder needed", "red")
+
+
+def change_label_status(message, color):
+    status_label.config(text=message, bg=color)
 
 
 def set_download_folder():
@@ -55,6 +64,7 @@ def configure_gui(gui):
     download_folder_button.place(x=440, y=80)
     download_folder_label.place(x=20, y=80)
     download_video_button.place(x=240, y=160)
+    status_label.place(x=320, y=160)
 
 
 gui = tkinter.Tk()
@@ -68,6 +78,7 @@ video_link_label = Label(gui, text="Youtube URL")
 download_folder_label = Label(gui, text="Download Folder")
 download_folder_button = Button(gui, text="Browse", command=set_download_folder)
 download_video_button = Button(gui, text="Download", command=download_stream)
+status_label = Label(gui, text="")
 
 configure_gui(gui)
 
